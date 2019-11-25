@@ -17,13 +17,21 @@ namespace vendeglo_2.Models
             return userIdentity;
         }
     }
-
+    /// <summary>
+    /// Az adatok elérését lehetővé tévő osztály, többlépésben leszármaztatva
+    /// a DBContext-ből. Az adattáblák elérését lehetővé tevő gyűjteményeket itt kell elhelyezni
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        /// <summary>
+        /// Ezzel egy saját adattáblát teszünk az Identity adatbázisába
+        /// </summary>
+        public DbSet<MenuItem> MenuItems { get; set; }
 
         public static ApplicationDbContext Create()
         {
