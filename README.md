@@ -112,3 +112,93 @@ több étlap lehet
 	Láthatjuk, hogy ebben van megadva a "DefaultConnection" mint default adatbázisnév
 	A konstruktor után csinálunk egy property-t:
 	public DBSet<MenuItem> MenuItems {get; set;}
+
+
+- Ahhoz h a model módosítása az adatbázisba kerüljön, először:
+	PM> add-migration 'add MenuItem table'   
+
+(Egyszerre csak egy migrációs lépésről lehet update-elni, tehát ha már van migrációs lépés, nem lehet egy újabb, hanem kell egy update-database)
+
+- Ha megvan a migrációs lépés, jöhet az:
+	PM> update-database 
+
+-fentiek után (befrissítve az ObjectExpolrer-t) megjelenik a MenuItems, és van benne Id, Name, Description
+
+tehát: Létrehozunk egy saját modelt és ezt úgy tudjuk bekötni az Identity adatbázisba, hogy a \Models\IdentityModels.cs-ben lévő 
+ApplicationBDContent osztályt használjuk
+
+11_Kezdő spec., beejelentkezés 11
+---------------------------------
+migrációs lépések visszavonása, újra lefuttatása az alábbi parancsokkal:
+PM> update-database -t, 0
+PM> update-database -t, 'id of migration step'
+
+
+
+
+12_Kezdő spec., beejelentkezés 12
+---------------------------------
+Inkrementális adatbázis modellezés a Code First Migration segítségével
+
+## Módosítjuk az adatmodell-t, és bejátszuk az SQL szerverre 
+(Árat hozzáadunk a táblához)
+
+	- a Model-ben hozzátesszük az új property-t:
+	public int Price {get; set;} 
+	
+	PM> add-migration 'add MenuItem.Price column'
+
+	PM> update-database
+
+összefoglalva:
+--------------
+módosítottuk az adatmodellt (hozzáadtunk egy oszlopot, vagy megváltoztattunk egy tulajdonságot)
+Az add-migration 'name' paranccsal az adatmodellt kiírtuk egy migration step-be
+ezzel létrejön a Migrations\20191128nnnn_name datamodel.cs és még két állomány
+fenti egy adatbázis módosító lépés (migration step)
+ebben van egy Up() és egy Down() fgv, ezek a módosítást bejátszák az adatbázisba, 
+illetve kiveszik a már berakott módosítást az adatbázisból
+
+utána a migration step-et kiírjuk az adatbázisba:
+update-database paranccsal 
+fontos, hogy a web.config-ban van megadva az adatelérési út:
+a <ConnectionStrings> részben tudjuk megadni az adatbázis nevét, elérési útját és az autentikációs módszert
+
+A __MigrationHistory táblában regisztrálja a módosító lépéseket, ennek alapján a lépések visszavonhatók és újra bejátszhatók 
+az update-database -t 'name'  paranccsal. Itt a name a migrációs lépés neve, ami szerepel a megfelelő add-migration 'name'
+parancsban, és a __MigrationHistory táblában
+az update-database -t, 0 paranccsal a kezdethez megyünk, a teljes lépéssorozatot visszavonhatjuk
+az update-database paranccsal az utolsó migration step-ig bejátszuk a módosításokat
+
+
+13_Étlap és adatbázis1 (2. nap)
+---------------------------------
+
+(eddigiek ismétlése és összefoglalása)
+
+Db készítéshez a CF Migration-t használjuk
+a user-ek kezeléséhez at ASP.NET Identity-t használjuk
+	CF-el létrehozza a saját db-át
+	most a db-t nem a DbContext-ből származtatjuk le, mint korábban,
+ 	hanem az IdentityDbContex-ből, hogy meglegyen az Identity adatbázisa
+
+
+14_Étlap és adatbázis2 (2. nap folyt.)
+--------------------------------------
+- csinálunk egy controllert
+	controllers mappa jobb gomb -> Add -> Controler -> MVC5 Contr. w views, using Entity Framework
+	Model Class: MenuItem
+	Data context class: ApplicationDbContent 
+	többi alapértelmezésben
+
+generálódott a MenuItems nevű kontroller, amegfelelő action-ökkel, ez az IIS elindításával látható is
+http://localhostnnn/MenuItem
+mivel nem adtuk meg az action-t, az index-re fog vinni
+itt a Create New -val új menüelemet tudunk létrehozni
+
+most bárki tud új elemet felvinni, csináljuk meg, hogy csak a bejelentkezett user tudja ezt:
+ASP.NET Identity csinálja
+
+	- hogyan oldjuk meg, hogy csak bizonyos user-ek férjenek hozzá egy controller erőforrásaihoz:
+	Controller annotálása az [Authorize] -al --> ezt a controllert csak bejelentkezett user használhatja
+	az annotációt az osztálydefiníció fölé írjuk

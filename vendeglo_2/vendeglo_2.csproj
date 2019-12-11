@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MenuItemsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +209,18 @@
     <Compile Include="Migrations\201911251222077_add MenuItem table.cs" />
     <Compile Include="Migrations\201911251222077_add MenuItem table.Designer.cs">
       <DependentUpon>201911251222077_add MenuItem table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911251332522_add MenuItem.Price column.cs" />
+    <Compile Include="Migrations\201911251332522_add MenuItem.Price column.Designer.cs">
+      <DependentUpon>201911251332522_add MenuItem.Price column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021610434_set MenuItem.Name column to required.cs" />
+    <Compile Include="Migrations\201912021610434_set MenuItem.Name column to required.Designer.cs">
+      <DependentUpon>201912021610434_set MenuItem.Name column to required.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021630424_set MenuItems.Name maxlenght to 200.cs" />
+    <Compile Include="Migrations\201912021630424_set MenuItems.Name maxlenght to 200.Designer.cs">
+      <DependentUpon>201912021630424_set MenuItems.Name maxlenght to 200.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -278,6 +291,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\MenuItems\Create.cshtml" />
+    <Content Include="Views\MenuItems\Delete.cshtml" />
+    <Content Include="Views\MenuItems\Details.cshtml" />
+    <Content Include="Views\MenuItems\Edit.cshtml" />
+    <Content Include="Views\MenuItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -301,6 +319,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251222077_add MenuItem table.resx">
       <DependentUpon>201911251222077_add MenuItem table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911251332522_add MenuItem.Price column.resx">
+      <DependentUpon>201911251332522_add MenuItem.Price column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021610434_set MenuItem.Name column to required.resx">
+      <DependentUpon>201912021610434_set MenuItem.Name column to required.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021630424_set MenuItems.Name maxlenght to 200.resx">
+      <DependentUpon>201912021630424_set MenuItems.Name maxlenght to 200.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
