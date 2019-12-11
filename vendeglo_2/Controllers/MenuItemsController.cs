@@ -10,12 +10,12 @@ using vendeglo_2.Models;
 
 namespace vendeglo_2.Controllers
 {
-    // kényszerítjük h csak bejelentkezett flhasználók használhassák ezt a kontorllert
-    [Authorize]
+    
     public class MenuItemsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        #region Nem bejelentkezett felhasználóknak
         // GET: MenuItems
         public ActionResult Index()
         {
@@ -37,7 +37,12 @@ namespace vendeglo_2.Controllers
             return View(menuItem);
         }
 
+        #endregion Nem bejelentkezett felhasználóknak
+
+        #region csak bejelenkezett felhasználóknak
         // GET: MenuItems/Create
+        // kényszerítjük h csak bejelentkezett flhasználók használhassák ezt a actiont
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -48,6 +53,7 @@ namespace vendeglo_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "Id,Name,Description,Price")] MenuItem menuItem)
         {
             if (ModelState.IsValid)
@@ -61,6 +67,7 @@ namespace vendeglo_2.Controllers
         }
 
         // GET: MenuItems/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +87,7 @@ namespace vendeglo_2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,Price")] MenuItem menuItem)
         {
             if (ModelState.IsValid)
@@ -92,6 +100,7 @@ namespace vendeglo_2.Controllers
         }
 
         // GET: MenuItems/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +118,7 @@ namespace vendeglo_2.Controllers
         // POST: MenuItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             MenuItem menuItem = db.MenuItems.Find(id);
@@ -116,7 +126,9 @@ namespace vendeglo_2.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion csak bejelentkezett felhasználóknak
 
+        #region takarítás magunk után dispose-al
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -125,5 +137,6 @@ namespace vendeglo_2.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion takarítás magunk után dispose-al
     }
 }

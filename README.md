@@ -136,7 +136,7 @@ PM> update-database -t, 'id of migration step'
 
 
 
-12_Kezdő spec., beejelentkezés 12
+##12_Kezdő spec., beejelentkezés 12
 ---------------------------------
 Inkrementális adatbázis modellezés a Code First Migration segítségével
 
@@ -171,7 +171,7 @@ az update-database -t, 0 paranccsal a kezdethez megyünk, a teljes lépéssoroza
 az update-database paranccsal az utolsó migration step-ig bejátszuk a módosításokat
 
 
-13_Étlap és adatbázis1 (2. nap)
+##13_Étlap és adatbázis1 (2. nap)
 ---------------------------------
 
 (eddigiek ismétlése és összefoglalása)
@@ -183,7 +183,7 @@ a user-ek kezeléséhez at ASP.NET Identity-t használjuk
  	hanem az IdentityDbContex-ből, hogy meglegyen az Identity adatbázisa
 
 
-14_Étlap és adatbázis2 (2. nap folyt.)
+##14_Étlap és adatbázis2 (2. nap folyt.)
 --------------------------------------
 - csinálunk egy controllert
 	controllers mappa jobb gomb -> Add -> Controler -> MVC5 Contr. w views, using Entity Framework
@@ -202,3 +202,14 @@ ASP.NET Identity csinálja
 	- hogyan oldjuk meg, hogy csak bizonyos user-ek férjenek hozzá egy controller erőforrásaihoz:
 	Controller annotálása az [Authorize] -al --> ezt a controllert csak bejelentkezett user használhatja
 	az annotációt az osztálydefiníció fölé írjuk
+
+
+##15_Étlap és adatbázis3 (2. nap folyt.)
+--------------------------------------
+ - szeretnénk, ha a be nem jelentkezett user az étlapot láthatná:
+	- az azonoítatlan felhasználó (anonymous user) férjen hozzá a kontroller index és details action-jéhez
+	- a Create, Edit, Delete pdig csak a bejelentkezett user-nek legyen megengedve
+	- megoldás: az [Authorize] használható az action-ok előtt is
+	- (egy action fgv elé több annotáció is írható)
+
+- a kód tagolására jól használható a #region  .... #endregion kijelölés!
