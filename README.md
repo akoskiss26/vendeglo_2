@@ -255,3 +255,20 @@ www.getbootstrap.com
 
 	a _Layout.cshtml-ben kitöröljük javítjuk és/vagy kitöröljük a menüelemeket
 	a javítással a szendvics-menü is változik!
+
+
+##18_Étlap és adatbázis 6 (2. nap folyt.)
+--------------------------------------
+
+az ételek szakaszokba rendezése
+ (adatbázis és megjelenítési problémák lesznek)
+
+szivárgó absztrakciók törvénye - Joel Spolsky [joelonsoftware.com]
+
+ - lehetne, hogy felveszünk még egy property-t (oszlopot) a menuItem.cs-be, ami a szakaszokat (kategóriákat) tartalmazná,
+    így minden item-hez hozzárendelhetnénk a kategórianevét, pl. előétel, főétel, desszert
+ - EZ NEM JÓ (antipattern) mert ha át kell írni a deszertet desszert-re, minden item-en át keel írni
+
+ - HELYETTE normalizálunk: csinálunk egy másik táblázatot (saját osztályt), aminek minden tétele megint tartalmaz Id-t: 1, 2, 3..stb
+   az első táblázatban nem a leveseket, mit kategóriát írjuk, hanem csak az id-t
+   így már két osztályunk van: MenuItems és Category
