@@ -272,3 +272,37 @@ szivárgó absztrakciók törvénye - Joel Spolsky [joelonsoftware.com]
  - HELYETTE normalizálunk: csinálunk egy másik táblázatot (saját osztályt), aminek minden tétele megint tartalmaz Id-t: 1, 2, 3..stb
    az első táblázatban nem a leveseket, mit kategóriát írjuk, hanem csak az id-t
    így már két osztályunk van: MenuItems és Category
+
+
+
+ 
+##19_Étlap és adatbázis 7 (2. nap folyt.)
+--------------------------------------
+ ételek szakaszokba rendezése folytatás
+
+-azt akarjuk, hogy a két tábla legyen összekötve
+
+	- a MenuItem osztályba csináljunk egy új propertyt:
+	public Category Category {get; set;}
+
+	- csináltassuk meg hozzá a Category class-t
+
+	- a Category class-ba csináljunk kér propertyt:
+	public int Id {get; set}
+	public sring Name {get; set;}
+
+	az Id elnevezés miatt az a tábla elsődleges kulcsa lesz, ami automatilusan emelkedik
+	ez az Identity és a CodeFirst miatt van!
+	ue. lenne, ha kiírnánk a [key] annotációt
+
+tehát megcsináltuk az új osztályt, és a hivatkozást rá a MenuItem osztályban
+
+ezt a módosítást ki kell írni az adatbázisba
+	add-migration 'add Category class and MenuItem.Category column'
+
+ha megnézzük, most a Category elemei lehetnek NULL
+de minden elemenek kell tartozni valahová, mert másképp nem tudjuk megjeleníteni!
+tehát jó, hogy megvan a Category, de ki kell egészíteni hogy
+	- nem lehett NULL, 
+	- webfelületet kell hozzá gyártani
+	- ki kell tenni a MenuItem-re is
