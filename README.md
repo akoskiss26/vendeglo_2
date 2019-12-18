@@ -213,3 +213,45 @@ ASP.NET Identity csinálja
 	- (egy action fgv elé több annotáció is írható)
 
 - a kód tagolására jól használható a #region  .... #endregion kijelölés!
+
+
+##16_Étlap és adatbázis4 (2. nap folyt.)
+--------------------------------------
+
+- web-es alkalmazásoknál a nem elérhető részeket nem jelenítjük meg:
+
+	-az index oldalon (views/MenuItems/index) vannak olyan linkek, amiket a nem bejelentkezett user nem használ, 
+	ezeket kellene nem megjeleníteni  --> a view-kban kellene a diszkussziót elvégezni
+	- látjuk, hogy html.ActionLink-ek vannak az action-ökre
+	- esetszétválasztással megállapítjuk, hogy a beeső kérés küldője be van-e jelentkezve:
+		@if(Request.IsAuthenticated)
+		   {
+		    } 
+	a @ -al jelezzük, hogy C# kód következik, és a fordító tudja h ez addig tart, amíg értelmes lezárá nincs, tehát pl. az if() {} végéig 
+	a {}-be írjuk a meg/meg nem jelenítendő actionLink-et
+	ennél a módszernél a {}-ben levő információ nem is megy ki a böngészőbe, tehát teljesen biztonságos
+
+	A razor az alábbiak szerint értelmezi a kódot:
+	Ha @ --> C# kód jön, egészen az "értelmes" lezárásig (kódblokk vége, ;, stb.), ha nincs zárójel, csak a közvetlen utána levő kifejezést 		értelmezi
+	Ha <> (azaz HTML tag) --> html kód, egészen a vége tag-ig, vagy a következő @-ig
+	A html és C# kódok egymásba ágyazhatók! 
+	
+	html kódú kiírásnál figyeljünk a div és a span közötti különbségre a mi a megjelenítésben van (pl. sortörés)
+
+
+
+##17_Étlap és adatbázis5 (2. nap folyt.)
+--------------------------------------
+
+étlap link megjelenítése a főoldalon
+	a cim meghívása után lefut a _ViewStart.cshtml, és lefut az abban lévő - most: 
+	~/views/Shared/_Layout.cshtml  (ez mindig megjelenik)
+	a _Layout.cshtml-ből látjuk, hogy bootstrap-et használ, a verziót  a Content/bootstrap.css-ben látjuk
+	a _Layout.cshtml-ben megtaláljuk a navbar-t, abban pedig a menü elemeket ("név", "action", "controller")
+
+bootstrap help:
+www.getbootstrap.com
+	ebben a navbar részleteit megtaláljuk
+
+	a _Layout.cshtml-ben kitöröljük javítjuk és/vagy kitöröljük a menüelemeket
+	a javítással a szendvics-menü is változik!
