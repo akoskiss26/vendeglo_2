@@ -18,5 +18,13 @@ namespace vendeglo_2.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
+
+        /// <summary>
+        /// Ez az osztály az adott menüelem kategóriáját (előétel, főétel)
+        /// tartalmazza
+        /// </summary>
+        public Category Category { get; set; }
     }
+
+
 }
