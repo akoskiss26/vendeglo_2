@@ -306,3 +306,24 @@ tehát jó, hogy megvan a Category, de ki kell egészíteni hogy
 	- nem lehett NULL, 
 	- webfelületet kell hozzá gyártani
 	- ki kell tenni a MenuItem-re is
+
+
+
+
+##20_Étlap és adatbázis 8 (2. nap folyt.)
+---------------------------------------
+
+Megcsináljuk a CategoriesController-t
+	new controller with views...
+	model: categories
+
+Kiírjuk a menüsorba a címkét:
+	_Layout.cshtml-ben új sort csinálunk erre
+
+Restrikció - csak bejelentkezett user vihet fel adatokat:
+	controller elején: [Authenticated]
+
+Nem bejelentkezett user ne is lássa a menüszalagon a Categories cimkét:
+	_Layout.cshtml-ben: @if(Request.IsAuthenticated) 
+
+
