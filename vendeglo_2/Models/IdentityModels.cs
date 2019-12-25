@@ -37,5 +37,7 @@ namespace vendeglo_2.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<vendeglo_2.Models.Category> Categories { get; set; }
     }
 }
