@@ -327,3 +327,29 @@ Nem bejelentkezett user ne is lássa a menüszalagon a Categories cimkét:
 	_Layout.cshtml-ben: @if(Request.IsAuthenticated) 
 
 
+
+
+##21_Étlap és adatbázis 9 (2. nap folyt.)
+--------------------------------------
+
+
+Mostantól elválik a MenuItems és az étlap kezelése
+Szeretnénk az étlapon felsorolni a kategóriákat, és akattuk az oda való MenuItem-eket
+Persze kell a régi lista is, mert azon keresztül módosítunk és szerkesztünk
+
+Létrehozzuk az étlapot:
+Új kontrollert csinálunk a Controllers kvtárban (View-kkal együtt, ami nem kell majd töröljük)
+	Modell class továbbra is a MenuItem (több kontroller is használhatja ua. osztályt)
+	Controller name: MenuController
+
+	Az adatokat módosító action-okat törölhetjük ebből a kontrollerből (a Dispose-t hagyjuk benne)
+	A nézetekből ue-zeket törölhetjük
+
+	A _Layout.cshtml-ben a Menu címhez rendeljük a Menu kontrollert, és index action-t
+			     a MenuItems címkéhez rendeljük a MenuItems controllert és index action-t 
+			     a MenuItems-et csak azonosítás után láttatjuk:   if(requestIsAuthenticated)
+	
+	A sehova nem mutató edit delete, details-eket le kell szednünk a megjelenített menu/index oldalról (a controller ezen action-jait már 
+töröltük)
+		Views/menu/index.cshtml -ből töröljük ezeket az actionLink-eket
+		Views/Menu/deatils.cshtml-ből is töröljük ezeket az actionLink-eket
