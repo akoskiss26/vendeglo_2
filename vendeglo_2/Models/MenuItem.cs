@@ -22,6 +22,7 @@ namespace vendeglo_2.Models
         /// <summary>
         /// Ez az osztály az adott menüelem kategóriáját (előétel, főétel)
         /// tartalmazza
+        /// Navigációs property: egy másik táblában levő adatot tölt be
         /// </summary>
         public Category Category { get; set; }
     }

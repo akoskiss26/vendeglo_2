@@ -349,7 +349,77 @@ Létrehozzuk az étlapot:
 			     a MenuItems címkéhez rendeljük a MenuItems controllert és index action-t 
 			     a MenuItems-et csak azonosítás után láttatjuk:   if(requestIsAuthenticated)
 	
-	A sehova nem mutató edit delete, details-eket le kell szednünk a megjelenített menu/index oldalról (a controller ezen action-jait már 
-töröltük)
+	A sehova nem mutató edit delete, details-eket le kell szednünk a megjelenített menu/index oldalról (a controller ezen action-jait már 
+
+    töröltük)
 		Views/menu/index.cshtml -ből töröljük ezeket az actionLink-eket
 		Views/Menu/deatils.cshtml-ből is töröljük ezeket az actionLink-eket
+
+
+##22_Étlap és adatbázis 10 (2. nap folyt.)
+---------------------------------------
+
+egyszerűsítés: a System.Data.Entity névtér már meg van hívva using-gal, ezért az IdentityModels.cs-ben a Controller varázsló által gyártott sorban,
+ahol a Categories-ra hivatkozik, ez elhagyható
+
+ 
+
+Az étlap nézet elkészítése: (közepesen jó megolddás)
+
+	A menu kontroller view javítása:
+Azt szeretnénk, hogy az egyes MenuItem-ek kategőriák szerint csoportosítva jelenjenek meg
+Ehhez csináljunk egy új táblát, aminek első oszlopa a Categories, és eszerint rendezzük a táblát:
+Caategory.Name | Name | Decription | Price
+
+MenuController-ben:
+	Az ActionResult Index() -ben nincs más, csak egy view fgv hívás:
+	return View(db.MenuItems.ToList());
+
+	bővítjük:
+	var model = db.MenuItems.ToList()
+	return View(model)
+
+	A server explorerrel, v. a SQL Server Managerrel feltöltjük a Categories táblát és a MenuItems táblát
+	Ha most meghívjuk a db.MenuItems.ToList() fgv-t, a Categories oszlopban végig NULL lesz, mert még a 
+	NavigationProperty-t is meg kell adnunk:
+
+	 var model = db.MenuItems
+			.Include("Category")
+			.ToList()
+	return View(model) 
+	
+	vagy még jobb:
+	var model = db.MenuItems
+			.Include(mi => mi.Category)  //jobb hogy hivatkozást adunk meg, nem stringet!!
+			.ToList()
+	return View(model) 
+
+	ahhoz, hogy az egyes kategóriák elemei egy csoportban legyenek, még csoportnév szerint rendezni kell!:
+	még beszúrjuk: .OrderBy(mi => mi.Category.Name)
+	vagy csoport Id szerint, akkor: .OrderBy(mi => mi.Category.Id)
+
+átmegyünk az Index nézetre:	
+	az eddigi táblázatos megjelenést töröljük, csak a foreach marad meg, a html.DisplayFor(modelItem => item.Name)  stb.
+
+még a kategóri nevét kell kiírni:
+	elmentjük egy változóba (var category), és összehasonlítjuk minden elemnél
+	ha ua --> semmit nem csinálunk
+	ha változott --> elmentjük és kiírjuk az újat:
+	if(category != MenuItem.Category.Name)
+		{
+			@Html.DisplayFor(modelItem => MenuItem.Category.Name)
+			category = MenuItem.Category.Name
+		}
+	
+	
+
+	
+	
+##23_Étlap és adatbázis 11 (2. nap folyt.)
+----------------------------------------
+
+házi feladat: kategóriát kitenni a MenuItem-re is
+	      bootstrap collaps panel
+
+(itt a 2. nap, kedd vége)
+

@@ -17,7 +17,12 @@ namespace vendeglo_2.Controllers
         // GET: Menu
         public ActionResult Index()
         {
-            return View(db.MenuItems.ToList());
+            var model = db.MenuItems
+                //.Include("Category")   ez nem túl biztonságos, mert stringet adunk meg
+                .Include(mi=>mi.Category)   //jobb, mert hivatkozást adunk
+                .OrderBy(mi=>mi.Category.Id)
+                .ToList();
+            return View(model);
         }
 
         // GET: Menu/Details/5
