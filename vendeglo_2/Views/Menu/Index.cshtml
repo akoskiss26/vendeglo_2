@@ -8,37 +8,102 @@
 <h2>Menu</h2>
 
 
-    
+<div class="panel-group" id="menu">
 
-@foreach (var MenuItem in Model)
-{
-
-    if (category != MenuItem.Category.Name)
+    @foreach (var MenuItem in Model)
     {
-        //megjegyezni és kiírni a kategória nevet
-<h3>
-    @Html.DisplayFor(modelItem => MenuItem.Category.Name)
-</h3>
-       
 
-        category = MenuItem.Category.Name;
+        if (category != MenuItem.Category.Name)
+        {
+            //megjegyezni és kiírni a kategória nevet
+            category = MenuItem.Category.Name;
+
+            //a kategória külön becsukható panelen jelenik meg
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#menu" href="#collapse_@MenuItem.Category.Id">
+                           @Html.DisplayFor(modelItem => MenuItem.Category.Name)
+                        </a>
+                    </h3>
+                </div>
+                <div id="collapse_@MenuItem.Category.Id" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <h4>
+                            @Html.DisplayFor(modelItem => MenuItem.Name)
+                        </h4>
+
+                        <p>
+                            @Html.DisplayFor(modelItem => MenuItem.Description)
+                        </p>
+
+                        <p>
+                            <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
+                        </p>
+
+                    </div>
+                </div>
+            </div>  //ezt nem ide kell tenni, hanem a panelon levő szöveg után
+
+            
+        }
+
+
+
     }
+</div>
 
-<h4>
-    @Html.DisplayFor(modelItem => MenuItem.Name)
-</h4>
 
-<p>
-    @Html.DisplayFor(modelItem => MenuItem.Description)
-</p>
-
-<p>
-    <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong> 
-</p>
-           
-           
-           
-            
-            
-}
-
+       @*<div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            Collapsible Group 1
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Collapsible Group 2
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            Collapsible Group 3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </div>
+                </div>
+            </div>
+        </div>*@

@@ -423,3 +423,19 @@ házi feladat: kategóriát kitenni a MenuItem-re is
 
 (itt a 2. nap, kedd vége)
 
+
+
+##24_Kategóriák 1 (3. nap kezd.)
+------------------------------
+
+bootstrap collapsible Group:
+bootstrap-ból imásolva a collapsible group kódrészletet: https://www.w3schools.com/bootstrap/bootstrap_collapse.asp
+
+átírjuk a data-parent hivatkozást (ez kell a lenyíló menü visszacsukásához)
+és a collapse -nál dinamikus változót vezetünk be, hogy minden katgórianevet kiírjon az egymás utáni panelokra:
+	
+			<a data-toggle="collapse" data-parent="#menu" href="#collapse_@MenuItem.Category.Id">
+                           @Html.DisplayFor(modelItem => MenuItem.Category.Name)
+                        </a>
+
+azonban ezzel kategóriánként csak egy elemet tudunk kiírni - nem jó
