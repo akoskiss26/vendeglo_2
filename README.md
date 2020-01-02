@@ -439,3 +439,25 @@ bootstrap-ból imásolva a collapsible group kódrészletet: https://www.w3schoo
                         </a>
 
 azonban ezzel kategóriánként csak egy elemet tudunk kiírni - nem jó
+
+
+
+##25_Kategóriák 2 (3. nap folyt.)
+-------------------------------
+Segítene, ha a kategória kiírásán belül nyitnánk egy újabb ciklust, és ebben lenne az ételek felsorolása
+
+	ehhez az alábbi szűrést alkalmazzuk:
+		 @foreach (var innerItem in Model.Where(x => x.Category.Name == category))
+                        {
+                            <h4>
+                                @Html.DisplayFor(modelItem => innerItem.Name)
+                            </h4>
+
+                            <p>
+                                @Html.DisplayFor(modelItem => MenuItem.Description)
+                            </p>
+
+                            <p>
+                                <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
+                            </p>
+                        }

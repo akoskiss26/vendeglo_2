@@ -29,17 +29,35 @@
                 </div>
                 <div id="collapse_@MenuItem.Category.Id" class="panel-collapse collapse in">
                     <div class="panel-body">
-                        <h4>
-                            @Html.DisplayFor(modelItem => MenuItem.Name)
-                        </h4>
 
-                        <p>
-                            @Html.DisplayFor(modelItem => MenuItem.Description)
-                        </p>
+                        @foreach (var innerItem in Model.Where(x => x.Category.Name == category))
+                        {
+                            <h4>
+                                @Html.DisplayFor(modelItem => innerItem.Name)
+                            </h4>
 
-                        <p>
-                            <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
-                        </p>
+                            <p>
+                                @Html.DisplayFor(modelItem => MenuItem.Description)
+                            </p>
+
+                            <p>
+                                <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
+                            </p>
+                        }
+
+
+
+                        @*<h4>
+            @Html.DisplayFor(modelItem => MenuItem.Name)
+        </h4>
+
+        <p>
+            @Html.DisplayFor(modelItem => MenuItem.Description)
+        </p>
+
+        <p>
+            <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
+        </p>*@
 
                     </div>
                 </div>
