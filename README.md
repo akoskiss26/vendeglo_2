@@ -461,3 +461,6 @@ Segítene, ha a kategória kiírásán belül nyitnánk egy újabb ciklust, és 
                                 <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
                             </p>
                         }
+
+De még hiba, hogy a menu meghívásánál minden legördülő menü (kategória) meg van nyitva, és először be kell mindegyiket
+zárni ahhoz, hogy helyreálljon a működés, és egyszerre csak egy kategória legyen nyitva
