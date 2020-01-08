@@ -38,6 +38,11 @@ namespace vendeglo_2.Models
             return new ApplicationDbContext();
         }
 
+        /// <summary>
+        /// Ezt a hivatkozást a Controller varázsló gyártotta ide, 
+        /// enélkül nincs Categories controller, mert az adatokhoz
+        /// nem fér hozzás közvetlenül, csak a MenuItems táblán keresztül
+        /// </summary>
         public DbSet<Category> Categories { get; set; }
     }
 }

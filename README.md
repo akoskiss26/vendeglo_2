@@ -463,4 +463,40 @@ Segítene, ha a kategória kiírásán belül nyitnánk egy újabb ciklust, és 
                         }
 
 De még hiba, hogy a menu meghívásánál minden legördülő menü (kategória) meg van nyitva, és először be kell mindegyiket
-zárni ahhoz, hogy helyreálljon a működés, és egyszerre csak egy kategória legyen nyitva
+zárni ahhoz, hogy helyreálljon a működés, és egyszerre csak egy kategória legyen nyitva, ezzel egyelőre nem foglalkozunk
+
+(fenti a talán közepesen jó megoldás) 
+
+
+###A new-kids megoldás:
+ - kell egy category lista,
+ - és kell az egyes category-khoz tartozó menuItem-ek listája
+	megoldás: át kell alakítanunk az adatforrást: a controllerben új adatmodellt csinálunk
+
+	csinálunk egy új nav.property-t a Category.cs-ben,
+	ebben felsoroljuk az összes, adott kategóriához tartozó menuItem-et
+
+Az IdentityModels.cs-ből kell kiindulni, mert az Identity ott készítette el a dbContext-et
+
+	Két táblánk van, a MenuItems és a Categories.
+	Azt akarjuk, hogy a Categories táblát meghívva a kategóriákhoz kapcsolva jelenjenek meg az oda tartozó MenuItem-ek
+	Ezért a Models/Category.cs -be felveszünk egy property-t, ami egy MenuItem-eket tartalmazó lista, neve MenuItems:		
+		public List<MenuItem> MenuItems{get; set;}  (ez is navigation property)
+
+		fenti prop tartalmazza minden category elemhez a hozzá tartozó MenuItem-eket (ételeket)
+		azért, mert ezekkel az elnevezésekkel az Entity Framework összerakja a két osztályt (Caterory és MenuItem)
+
+	Ezekután a MenuController Index action-jében nem a MenuItems táblát (db.MenuItems) kérdezzük le
+	hnem a Categories táblát (db.Categories) 
+	itt is be kell tölteni a nav prop másik oldalát, azaz a MenuItems táblát (.Include (c => c.MenuItems))
+	sorbarendezzük név szerint (.OrderBy(c => c.Name))
+	és a végére kell egy listába szedés  (.ToList())  mert csak így csinálja meg a lekérdezést
+		 
+
+Átmegyünk a View -ra, azIndex.cshtml-re:
+	 a nézetnek egy Category listát adunk át, ezért a @Model sorban is lecseréljük a MenuItem -et Category-ra
+	a var category változóra már nem lesz szükség
+	a forech-el végigmegyünk a kategóriákon
+	a belső foreac-el pedig egy kategórián
+
+	EZZEL A RÉSSZEL KAPCSOLATBAN LEVELEZÉS PG-vel!!!

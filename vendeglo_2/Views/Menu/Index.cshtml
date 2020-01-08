@@ -1,8 +1,7 @@
-﻿@model IEnumerable<vendeglo_2.Models.MenuItem>
+﻿@model IEnumerable<vendeglo_2.Models.Category>
 
 @{
     ViewBag.Title = "Index";
-    var category = "";
 }
 
 <h2>Menu</h2>
@@ -10,61 +9,46 @@
 
 <div class="panel-group" id="menu">
 
-    @foreach (var MenuItem in Model)
+    @foreach (var category in Model)
     {
 
-        if (category != MenuItem.Category.Name)
-        {
-            //megjegyezni és kiírni a kategória nevet
-            category = MenuItem.Category.Name;
 
             //a kategória külön becsukható panelen jelenik meg
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#menu" href="#collapse_@MenuItem.Category.Id">
-                           @Html.DisplayFor(modelItem => MenuItem.Category.Name)
+                        <a data-toggle="collapse" data-parent="#menu" href="#collapse_@category.Id">
+                           @Html.DisplayFor(modelItem => category.Name)
                         </a>
                     </h3>
                 </div>
-                <div id="collapse_@MenuItem.Category.Id" class="panel-collapse collapse in">
-                    <div class="panel-body">
+                    <div id="collapse_@category.Id" class="panel-collapse collapse in">
+                        <div class="panel-body">
 
-                        @foreach (var innerItem in Model.Where(x => x.Category.Name == category))
-                        {
-                            <h4>
-                                @Html.DisplayFor(modelItem => innerItem.Name)
-                            </h4>
+                            @foreach (var innerItem in category.MenuItems)
+                            {
+                                <h4>
+                                    @Html.DisplayFor(modelItem => innerItem.Name)
+                                </h4>
 
-                            <p>
-                                @Html.DisplayFor(modelItem => innerItem.Description)
-                            </p>
+                                <p>
+                                    @Html.DisplayFor(modelItem => innerItem.Description)
+                                </p>
 
-                            <p>
-                                <strong>@Html.DisplayFor(modelItem => innerItem.Price)</strong>
-                            </p>
-                        }
+                                <p>
+                                    <strong>@Html.DisplayFor(modelItem => innerItem.Price)</strong>
+                                </p>
+                            }
 
 
 
-                        @*<h4>
-            @Html.DisplayFor(modelItem => MenuItem.Name)
-        </h4>
+                    
 
-        <p>
-            @Html.DisplayFor(modelItem => MenuItem.Description)
-        </p>
-
-        <p>
-            <strong>@Html.DisplayFor(modelItem => MenuItem.Price)</strong>
-        </p>*@
-
+                        </div>
                     </div>
-                </div>
             </div>  //ezt nem ide kell tenni, hanem a panelon levő szöveg után
 
             
-        }
 
 
 
