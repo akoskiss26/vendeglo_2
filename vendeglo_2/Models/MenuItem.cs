@@ -24,6 +24,7 @@ namespace vendeglo_2.Models
         /// tartalmazza
         /// Navigációs property: egy másik táblában levő adatot tölt be
         /// </summary>
+        [Required]  //ezzel biztosítjuk, hogy az adatbázisban a távoli kulcs nindig ki legyen töltve
         public Category Category { get; set; }
     }
 

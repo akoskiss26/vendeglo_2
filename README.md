@@ -500,3 +500,49 @@ Az IdentityModels.cs-ből kell kiindulni, mert az Identity ott készítette el a
 	a belső foreac-el pedig egy kategórián
 
 	EZZEL A RÉSSZEL KAPCSOLATBAN LEVELEZÉS PG-vel!!!
+
+
+	Tanulság: az adatbázist kell jól megcsinálni, 
+	  utána a kontrollerben kell jól előkészíteni a kívánt adatokat (táblákat), és 	
+	  a view-ban már csak megjeleníteni kell
+
+
+
+##26_Kategóriák 3 (3. nap folyt.)
+-------------------------------
+
+A menuItemeket rögzíteni, és változtatni kell tudni
+Jelenleg a MenuItems táblába nem tudjuk felvinni az új elem kategóriáját 
+és ha felviszünk egy új elemet, nem fogja kiírni, mert nincs hozzárendelve categoryId
+
+Megoldás: javítani kell az adatbázison:
+	add-migration ''-al megnézzük, változott-e az adatbázis, hogy reverse nav property-t is beleraktuk, kiderült hogy nem, tehát az így 	
+gyártott migrációs lépés üres lesz
+
+	lehet h. jó lenne, ha a MenuItems táblában Category mező kitöltése kötelező lenne: 
+	Írjuk ezt bele: [Required]
+	utána: add-migration '' (de mivel már volt egy add-migration, kell egy update-database)
+	utána: update-database
+
+Figyelem!
+Abban az estben, már korábban ha kézzel felvittünk a MenuItems táblába egy új elemet, és annak a Category-ja NULL, akkor
+nem tudja az adatbázist update-elni, és hibaüzenetet ad
+Merthogy az adatbázisban van egy sor, aminek nincs Category értéke, holott azt mondtuk, a Category nem lehet nulla!!!
+Ha van nem lefutott migrációs lépésünk, akkor az alaklmazás em fog futni addig, amíg az alkalmazás modell és az adatbázis nincs szinkronban
+
+Megoldás_1: Javítjuk az adato(ka)t kézzel az adatbázisban -> beírjuk a MenuItem Category-ját
+	ez egy nagyobb adatbázisban nem nagyon megoldható (kívül van a migrációs lépések automatizmusán)
+
+Megoldás_2: Megadjuk az adott mező alapértelmezett értékét a le nem futott migrációs lépésben:
+	a Migration/nnnn_stepname.Category.cs -ben, az Up() fgv-ben, az Alter Column() metódusban tudjuk paraméterként megadni:
+	AlterColumn("dbo.MenuItems", "CategoryId", c=>c.Int(nullable: false, defaultValue: 1))
+	ezután lefuttatva az update-database -t, a dolognak működnie kellene, de mégsem:
+	***********************************	
+	hiba: előbb kijelöli a non-nullable-t, és csak utána akarja a default értéket beírni (megoldás később) 
+	**************************************
+
+(a hibát mégis javítsuk ki az 1 megoldás szerint)
+
+Utána új MenuItemet akarunk felvinni, de a progam futás megáll, és az új elem nem kerül be az adabázisba
+Oka: a MenuItems kontrollerben a Create action post oldalán van egy esetszétválasztás, ahol megnézi hogy az adabázisba elküldendő
+adathamaz valid-e. Nyilván nem, mert nem adtunk meg Category-t. Ezt az MVC intézte a Model és a db "össze-függése" miatt 
